@@ -50,10 +50,10 @@
 			var secondInHtml = '';
 			var thirdInHtml = '';
 		
-			if(kamasMenuList.length > 0){
+			if(menuList.length > 0){
 				firstInHtml += '<ul class="dep1">';
-				for(var i = 0; i<kamasMenuList.length; i++){
-					var val = kamasMenuList[i];
+				for(var i = 0; i<menuList.length; i++){
+					var val = menuList[i];
 					if(val.LEVEL_NO == 1){
 						firstInHtml += '<li onMouseEnter="showSubMenu(\''+val.MENU_ID+'\')"><a href="#">'+val.MENU_NAME+'</a></li>';
 

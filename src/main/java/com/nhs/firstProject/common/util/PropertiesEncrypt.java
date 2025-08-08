@@ -18,7 +18,7 @@ public class PropertiesEncrypt {
   private static Logger log = LoggerFactory.getLogger("AESTEST");
   /**
    * @param args
- * @throws KAMASException 
+ * @throws ProjectException 
  * @throws BadPaddingException 
  * @throws IllegalBlockSizeException 
  * @throws NoSuchPaddingException 
