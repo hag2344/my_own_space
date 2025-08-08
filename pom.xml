@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  	<modelVersion>4.0.0</modelVersion>
+  	<groupId>com.nhs</groupId>
+  	<artifactId>firstProject</artifactId>
+  	<name>firstProject</name>
+  	<packaging>war</packaging>
+  	<properties>
+		<java-version>1.8</java-version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	       <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<org.springframework-version>5.3.22</org.springframework-version>
+		<org.aspectj-version>1.9.4</org.aspectj-version>
+		<org.slf4j-version>1.6.6</org.slf4j-version>
+		<env>local</env>
+		<timestamp>${maven.build.timestamp}</timestamp>
+	    <maven.build.timestamp.format>MMddHHmm</maven.build.timestamp.format><!-- yyyy는 버전으로 -->
+	    <timeZone>Asia/Seoul</timeZone>		
+	</properties>
+	<repositories>
+	    <repository>
+	        <id>sqlserver-jdbc</id>
+	        <url>http://clojars.org/repo/</url>
+	    </repository>     
+	</repositories>
+  
+  <build>
+  	<finalName>${project.artifactId}_${env}_${build.time}</finalName>
+    <plugins>
+      <plugin>
+        <artifactId>maven-eclipse-plugin</artifactId>
+        <version>2.10</version>
+        <configuration>
+            <additionalProjectnatures>
+                <projectnature>org.springframework.ide.eclipse.core.springnature</projectnature>
+            </additionalProjectnatures>
+            <additionalBuildcommands>
+                <buildcommand>org.springframework.ide.eclipse.core.springbuilder</buildcommand>
+            </additionalBuildcommands>
+            <downloadSources>true</downloadSources>
+            <downloadJavadocs>true</downloadJavadocs>
+        </configuration>
+      </plugin>
+      <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.8.1</version>
+          <configuration>
+              <source>1.8</source>
+              <target>1.8</target>
+              <compilerArgument>-Xlint:all</compilerArgument>
+              <showWarnings>true</showWarnings>
+              <showDeprecation>true</showDeprecation>
+          </configuration>
+      </plugin>
+   	  <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>exec-maven-plugin</artifactId>
+          <version>1.6.0</version>
+          <configuration>
+              <mainClass>org.test.int1.Main</mainClass>
+          </configuration>
+      </plugin>
+      <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>build-helper-maven-plugin</artifactId>
+          <version>1.10</version>
+          <executions>
+              <execution>
+                  <id>timestamp-property</id>
+                  <goals>
+                      <goal>timestamp-property</goal>
+                  </goals>
+                  <configuration>
+                      <name>build.time</name>
+                      <pattern>MMddHHmm</pattern>
+                      <timeZone>Asia/Seoul</timeZone>
+                  </configuration>
+              </execution>
+          </executions>
+      </plugin>
+    </plugins>
+    <resources>
+    	<resource>
+    		<directory>src/main/resources.${env}</directory>
+    	</resource>
+    	<resource>
+         <directory>src/main/java</directory>
+         <includes>                      
+             <include>**/*.xml</include>
+         </includes>
+     </resource>
+    </resources>
+    <pluginManagement>
+    	<plugins>
+    		<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+    		<plugin>
+    			<groupId>org.eclipse.m2e</groupId>
+    			<artifactId>lifecycle-mapping</artifactId>
+    			<version>1.0.0</version>
+    			<configuration>
+    				<lifecycleMappingMetadata>
+    					<pluginExecutions>
+    						<pluginExecution>
+    							<pluginExecutionFilter>
+    								<groupId>
+    									org.codehaus.mojo
+    								</groupId>
+    								<artifactId>
+    									build-helper-maven-plugin
+    								</artifactId>
+    								<versionRange>
+    									[1.10,)
+    								</versionRange>
+    								<goals>
+    									<goal>
+    										timestamp-property
+    									</goal>
+    								</goals>
+    							</pluginExecutionFilter>
+    							<action>
+    								<ignore></ignore>
+    							</action>
+    						</pluginExecution>
+    					</pluginExecutions>
+    				</lifecycleMappingMetadata>
+    			</configuration>
+    		</plugin>
+    	</plugins>
+    </pluginManagement>
+  </build>
+    <profiles>
+		<profile>
+			<id>local</id>
+			<properties>
+				<env>local</env>
+			</properties>
+		</profile>
+		<profile>
+			<id>test</id>
+			<properties>
+				<env>test</env>
+			</properties>
+		</profile>
+	</profiles>
+	<version>2025</version>  
+  <dependencies>
+  	<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${org.springframework-version}</version>
+			<exclusions>
+				<!-- Exclude Commons Logging in favor of SLF4j -->
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				 </exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+		
+		<!-- AspectJ -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>${org.aspectj-version}</version>
+		</dependency>	
+	  	
+	  	<!-- Logging -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${org.slf4j-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${org.slf4j-version}</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>2.17.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>2.17.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-jcl</artifactId>
+			<version>2.17.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-slf4j-impl</artifactId>
+			<version>2.17.1</version>
+		</dependency>
+		
+		<!-- Apache Commons -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.6</version>
+		</dependency>
+		
+		<!-- JSON -->
+		<dependency>
+			<groupId>net.sf.json-lib</groupId>
+			<artifactId>json-lib-ext-spring</artifactId>
+			<version>1.0.2</version>		
+			<exclusions>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>
+			</exclusions>	
+		</dependency>
+		
+		<dependency>
+		    <groupId>com.googlecode.json-simple</groupId>
+		    <artifactId>json-simple</artifactId>
+		    <version>1.1</version>
+		</dependency>
+		
+		<!-- 암호화, 복호화 -->
+		<dependency>  
+    		<groupId>org.jasypt</groupId>  
+    		<artifactId>jasypt-spring3</artifactId>  
+    		<version>1.9.3</version>  
+		</dependency>	
+		
+		<!-- AesCrypto 암호화, 복호화 이용 -->
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcprov-jdk15on</artifactId>
+			<version>1.65</version>
+		</dependency>
+		
+		<!-- mybatis-spring 1.2.2 -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>2.0.4</version>
+		</dependency>
+		
+		<!-- MyBatis -->
+		<dependency>
+		    <groupId>org.mybatis</groupId>
+		    <artifactId>mybatis</artifactId>
+		    <version>3.5.3</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.3.2</version>
+		</dependency>
+			
+		<dependency>
+		    <groupId>commons-dbcp</groupId>
+		    <artifactId>commons-dbcp</artifactId>
+		    <version>1.4</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.microsoft.sqlserver</groupId>
+			<artifactId>sqljdbc4</artifactId>
+			<version>4.0</version>
+		</dependency>
+		
+		<!-- Commons DBCP2 -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-dbcp2</artifactId>
+			<version>2.1.1</version>
+		</dependency>
+		
+		<!--스프링시큐리티 config 라이브러리-->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>4.2.0.RELEASE</version>
+        </dependency>
+
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpcore</artifactId>
+			<version>4.4.6</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.11</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.apache.httpcomponents</groupId>
+		    <artifactId>httpmime</artifactId>
+		    <version>4.5.2</version>
+		</dependency>
+		
+		
+		<!-- MySQL -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.11</version>
+        </dependency>
+		
+		 <!-- Spring Data MongoDB -->
+		 <dependency>
+            <groupId>org.springframework.data</groupId> 
+            <artifactId>spring-data-mongodb</artifactId> 
+            <version>3.3.1</version>
+        </dependency> 
+        
+        <!-- MongoDB Java Driver -->
+        <dependency>
+            <groupId>org.mongodb</groupId> 
+            <artifactId>mongodb-driver-sync</artifactId> 
+            <version>4.4.0</version>
+        </dependency> 
+		
+		
+		<!-- 데이터베이스와의 연결을 지원하는  spring-jdbc, spring-beans를 추가-->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-jdbc</artifactId>
+		    <version>${org.springframework-version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-beans</artifactId>
+		    <version>${org.springframework-version}</version>
+		</dependency>
+		
+		<!-- JSON CONVERT -->
+		<dependency>
+		    <groupId>org.codehaus.jettison</groupId>
+		    <artifactId>jettison</artifactId>
+		    <version>1.3.8</version>
+		</dependency>		
+		
+		<dependency>
+			<groupId>commons-configuration</groupId>
+			<artifactId>commons-configuration</artifactId>
+			<version>1.6</version>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-beanutils</groupId>
+					<artifactId>commons-beanutils</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>commons-beanutils</groupId>
+					<artifactId>commons-beanutils-core</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
+		<!-- poi start -->		
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.16</version>
+		</dependency>
+		<dependency>
+		   <groupId>org.apache.poi</groupId>
+		   <artifactId>poi-ooxml</artifactId>
+		   <version>3.16</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-lgpl</artifactId>
+			<version>1.9.13</version>
+		</dependency>
+		
+		<!-- @Inject -->
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<version>1</version>
+		</dependency>
+		
+		<!-- Servlet -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+		
+		<!-- 웹서비스 연동 -->		
+		<dependency>
+			<groupId>wsdl4j</groupId>
+			<artifactId>wsdl4j</artifactId>
+			<version>1.6.3</version>
+		</dependency>
+		<dependency>
+		    <groupId>javax.xml.rpc</groupId>
+		    <artifactId>javax.xml.rpc-api</artifactId>
+		    <version>1.1.2</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.axis</groupId>
+		    <artifactId>axis</artifactId>
+		    <version>1.4</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310 -->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.datatype</groupId>
+		    <artifactId>jackson-datatype-jsr310</artifactId>
+		    <version>2.10.4</version>
+		</dependency>
+		<dependency>
+		    <groupId>commons-discovery</groupId>
+		    <artifactId>commons-discovery</artifactId>
+		    <version>0.5</version>
+		</dependency>
+		<dependency>
+		    <groupId>javax.xml.soap</groupId>
+		    <artifactId>javax.xml.soap-api</artifactId>
+		    <version>1.4.0</version>
+		</dependency>
+		<!-- 웹서비스 연동 END -->
+		
+		<!-- Test -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.7</version>
+			<scope>test</scope>
+		</dependency>
+		
+		
+		<!-- 첨부파일 START-->
+	    <dependency>
+	        <groupId>commons-fileupload</groupId>
+	        <artifactId>commons-fileupload</artifactId>
+	        <version>1.3.1</version>
+	    </dependency>
+	    
+	    <!-- JSON으로 응답하기 위해 필요한 라이브러리 -->
+	    <dependency>
+	        <groupId>org.codehaus.jackson</groupId>
+	        <artifactId>jackson-core-asl</artifactId>
+	        <version>1.9.13</version>
+	    </dependency>
+	    <dependency>
+	        <groupId>org.codehaus.jackson</groupId>
+	        <artifactId>jackson-mapper-asl</artifactId>
+	        <version>1.9.13</version>
+	    </dependency>
+		<!-- 첨부파일 END -->
+		
+		<!-- 추가(sode) -->
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-compress</artifactId>
+		    <version>1.20</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>commons-configuration</groupId>
+		    <artifactId>commons-configuration</artifactId>
+		    <version>1.10</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>commons-lang</groupId>
+		    <artifactId>commons-lang</artifactId>
+		    <version>2.6</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.jdom</groupId>
+		    <artifactId>jdom</artifactId>
+		    <version>2.0.2</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/commons-net/commons-net -->
+		<dependency>
+		    <groupId>commons-net</groupId>
+		    <artifactId>commons-net</artifactId>
+		    <version>3.6</version>
+		</dependency>
+		
+		<!-- MultipartHttpServletRequset -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.0.1</version>
+		</dependency>
+		
+		<!-- 웹 소켓 -->
+		<dependency>
+	        <groupId>org.springframework</groupId>
+	        <artifactId>spring-websocket</artifactId>
+	        <version>${org.springframework-version}</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>javax.websocket</groupId>
+		    <artifactId>javax.websocket-api</artifactId>
+		    <version>1.0</version>
+		    <scope>provided</scope>
+		</dependency>
+		
+		<!-- httpClient -->
+		<dependency>
+		    <groupId>commons-httpclient</groupId>
+		    <artifactId>commons-httpclient</artifactId>
+		    <version>3.1</version>
+		</dependency>
+		
+		<dependency> 
+			<groupId>taglibs</groupId> 
+			<artifactId>standard</artifactId> 
+			<version>1.1.2</version> 
+		</dependency>
+		
+		<!-- JavaMail API (SMTP support, TLS, etc.) - Maintained version -->
+		<dependency>
+		    <groupId>com.sun.mail</groupId>
+		    <artifactId>jakarta.mail</artifactId>
+		    <version>1.6.7</version>
+		</dependency>		
+		
+		<!-- javax.annotation 의존성 추가 -->
+		<dependency>
+		    <groupId>javax.annotation</groupId>
+		    <artifactId>javax.annotation-api</artifactId>
+		    <version>1.3.2</version>
+		</dependency>
+  </dependencies>
+  
+  
+  
+</project>

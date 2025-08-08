@@ -1,0 +1,38 @@
+@charset "UTF-8";
+
+.footer {
+	overflow: hidden;
+	position: relative;
+	width: 990px;
+	margin: 60px auto 0;
+	padding: 24px 90px 24px 0;
+	border-top: 2px solid #333;
+}
+
+.footer .site_name {
+	display: inline-block;
+	float: left;
+}
+
+.footer .site_link {
+	display: inline-block;
+}
+
+.footer .site_link:before {
+	content: '';
+	display: inline-block;
+	width: 1px;
+	height: 12px;
+	margin: 1px 12px 0;
+	background-color: #e5e5e5;
+	vertical-align: top;
+}
+
+.footer .nhs_site {
+	position: absolute;
+	top: 25px;
+	right: 0;
+	background-position: -4px -4px;
+	width: 91px;
+	height: 16px;
+}

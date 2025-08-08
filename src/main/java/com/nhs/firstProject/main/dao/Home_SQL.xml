@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="home">
+	
+    <select id="SELECT_USER_INFO" parameterType="hashMap" resultType="hashMap" statementType="CALLABLE">
+        SELECT 
+			UI.USER_ID, CONCAT('*',SUBSTRING( CAST(AES_DECRYPt(unhex(UI.USER_NAME),'SECURITY_KEY_NHS')AS CHAR),2))AS USER_NAME 
+			, RI.ROLE_NAME , UI.ROLE_ID, UI.STATUS_CD , CONCAT(SUBSTRING( CAST(AES_DECRYPT(UNHEX(UI.PHONE_NUMBER),'SECURITY_KEY_NHS')AS CHAR),1,9),'****')AS PHONE_NUMBER
+			, CONCAT('****',SUBSTRING(SUBSTRING_INDEX( CAST(AES_DECRYPT(UNHEX(UI.USER_EMAIL),'SECURITY_KEY_NHS')AS CHAR),'@',1),5),'@'
+		 	,SUBSTRING_INDEX( CAST(AES_DECRYPT(UNHEX(UI.USER_EMAIL),'SECURITY_KEY_NHS')AS CHAR),'@',-1))AS USER_EMAIL 
+		 FROM user_info UI
+		INNER JOIN role_info RI ON UI.ROLE_ID = RI.ROLE_ID
+		WHERE UI.USER_ID = #{USER_ID}
+    </select>
+
+    <select id="SELECT_LOGIN_INFO" parameterType="hashMap" resultType="hashMap" statementType="CALLABLE">
+		SELECT 
+			USER_ID, USER_PASSWORD , STATUS_CD
+		 FROM user_info 
+		WHERE USER_ID = #{USER_ID}
+    </select>
+    
+    <update id="UPDATE_USER_LOGIN_STATUS" parameterType="hashMap"  statementType="CALLABLE">
+		UPDATE user_info 
+			SET STATUS_CD = "T", EVENT_DT = NOW() 
+		WHERE USER_ID = #{USER_ID}
+    </update>
+    
+    <select id="SELECT_COMPARE_REQUEST_ROLE" parameterType="hashMap" resultType="hashMap" statementType="CALLABLE">
+		SELECT 
+			USER_ID, USER_PASSWORD , STATUS_CD
+		 FROM menu_info as mi 
+	 	 INNER JOIN role_menu as rm ON mi.menu_id = rm.menu_id 
+		 INNER JOIN user_info as ui ON rm.role_id = ui.role_id
+		WHERE ui.USER_ID = #{USER_ID} AND mi.URL_PATH LIKE CONCAT('%','/',#{URL_PATH}) 
+    </select>
+    
+    <select id="SELECT_MENU" parameterType="hashMap" resultType="hashMap" statementType="CALLABLE">
+		SELECT MENU_ID 
+		 FROM menu_info as mi 
+		WHERE mi.URL_PATH LIKE CONCAT('%','/',#{URL_PATH}) 
+		
+    </select>
+    
+</mapper>

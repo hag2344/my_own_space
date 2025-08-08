@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--#################### Threshold ####################
+LOGGER					LOCAL		DEV			REAL
+======================================================
+com.nhs.firstProject			DEBUG		INFO		INFO
+jdbc.sqltiming			INFO		INFO		WARN
+jdbc.resultsettable		INFO		WARN		WARN
+#################### Threshold  ####################-->
+<configuration>
+	<appenders>
+		<!-- console 로그 -->
+		<Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss}] %-5p: %c - %m%n"/>
+        </Console>
+        
+	</appenders>
+	
+	<loggers>
+		<logger name="com.nhs.firstProject" level="INFO" additivity="false"> 
+			<appender-ref ref="console"/> 
+		</logger>
+	
+		<logger name="org.springframework" level="INFO" additivity="false"> 
+			<appender-ref ref="console"/> 
+		</logger>
+
+		<logger name="org.mybatis" level="DEBUG" additivity="false"> 
+			<appender-ref ref="console"/> 
+		</logger>
+		<logger name="log4jdbc.debug" level="INFO" additivity="false"> 
+			<appender-ref ref="console"/> 
+		</logger>
+		<logger name="jdbc.connection" level="WARN" additivity="false"> 
+			<appender-ref ref="console"/> 
+		</logger> 
+		
+		<logger name="jdbc.audit" level="WARN" additivity="false"> 
+			<appender-ref ref="console"/> 
+		</logger> 
+		
+		<logger name="jdbc.sqlonly" level="WARN" additivity="false"> 
+			<appender-ref ref="console"/>  
+		</logger> 
+		
+		<logger name="jdbc.sqltiming" level="INFO" additivity="false"> 
+			<appender-ref ref="console"/> 
+		</logger> 
+		<logger name="jdbc.resultset" level="WARN" additivity="false"> 
+			<appender-ref ref="console"/> 
+		</logger> 
+		<logger name="jdbc.resultsettable" level="ERROR" additivity="false"> 
+			<appender-ref ref="console"/> 
+		</logger>
+		
+		<root level="info" additivity="true">
+			<AppenderRef ref="console" />
+		</root>
+	</loggers>
+</configuration>

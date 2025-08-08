@@ -1,0 +1,68 @@
+/* 기본 스타일 */
+.swal-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    width: 320px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    font-family: Arial, sans-serif;
+    z-index: 9999;
+    opacity: 0;
+    transform: translate(-50%, -60%);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* 팝업 보이기 애니메이션 */
+.swal-show {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+}
+
+/* 팝업 숨기기 애니메이션 */
+.swal-hide {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+}
+
+/* 팝업 내부 요소 */
+.swal-content {
+    padding: 15px;
+}
+
+.swal-icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.swal-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.swal-text {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* 확인 버튼 스타일 */
+.swal-button {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s ease;
+}
+
+.swal-button:hover {
+    background: #0056b3;
+}
